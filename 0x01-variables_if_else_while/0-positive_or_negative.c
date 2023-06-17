@@ -4,6 +4,9 @@
 /* more headers goes there */
 
 /* betty style doc for function main goes there */
+/**
+ * main - prints if nmber is positive, zero or negative
+ */
 int main(void)
 {
 	int n;
