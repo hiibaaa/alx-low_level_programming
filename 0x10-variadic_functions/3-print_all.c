@@ -1,76 +1,51 @@
 #include "variadic_functions.h"
-#include <stdio.h>
 
 /**
- * print_char - prints a character
- * @ap: va_list containing the character to print
+ *print_all - a program that prints anything
+ *@format: list of types of arguments passed to the function
+ *Return: void
  */
-void print_char(va_list ap)
-{
-	printf("%c", va_arg(ap, int));
-}
 
-/**
- * print_int - prints an integer
- * @ap: va_list containing the integer to print
- */
-void print_int(va_list ap)
-{
-	printf("%d", va_arg(ap, int));
-}
-
-/**
- * print_float - prints a float
- * @ap: va_list containing the float to print
- */
-void print_float(va_list ap)
-{
-	printf("%f", va_arg(ap, double));
-}
-
-/**
- * print_string - prints a string
- * @ap: va_list containing the string to print
- */
-void print_string(va_list ap)
-{
-	char *s = va_arg(ap, char*);
-
-	printf("%s", s == NULL ? "(nil)" : s);
-}
-
-/**
- * print_all - prints anything
- * @format: list of types of arguments passed to the function
- */
 void print_all(const char * const format, ...)
 {
-	va_list ap;
-	int i = 0, j;
-	char *sep = "";
+	va_list printall;
+	unsigned int x = 0, y, e = 0;
+	char *put;
+	const char s_arg[] = "cifs";
 
-	print_t print[] = {
-		{"c", print_char},
-		{"i", print_int},
-		{"f", print_float},
-		{"s", print_string},
-		{NULL, NULL}
-	};
-
-	va_start(ap, format);
-	while (format && format[i])
+	va_start(printall, format);
+	while (format && format[x])
 	{
-		j = 0;
-		while (j < 4 && format[i] != print[j].param[0])
-			++j;
-		if (j < 4)
+		y = 0;
+		while (s_arg[y])
 		{
-			printf("%s", sep);
-			print[j].f(ap);
-			sep = ", ";
+			if (format[x] == s_arg[y] && e)
+			{
+				printf(", ");
+				break;
+			} y++;
 		}
-		++i;
+		switch (format[x])
+		{
+			case 'c':
+				printf("%c", va_arg(printall, int)), e = 1;
+				break;
+			case 'i':
+				printf("%d", va_arg(printall, int)), e = 1;
+				break;
+			case 'f':
+				printf("%f", va_arg(printall, double)), e = 1;
+				break;
+			case 's':
+				put = va_arg(printall, char*), e = 1;
+				if (!put)
+				{
+					printf("(nil)");
+					break;
+				}
+				printf("%s", put);
+				break;
+		} x++;
 	}
-	printf("\n");
-	va_end(ap);
+	printf("\n"), va_end(printall);
 }
