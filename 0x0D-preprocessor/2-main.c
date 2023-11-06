@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 /**
- * main - print name of the  file
- * it was compiled from, followed by a new line
- * return 0 ;
- */
+* main - program that prints the name of the file
+* it was compiled from, followed by a new line.
+* Return: 0 if exited properly
+*/
 
 int main(void)
 {
